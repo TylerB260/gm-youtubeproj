@@ -1,7 +1,7 @@
 AddCSLuaFile()
 
 if SERVER then
-    util.AddNetworkString("youtube_proj_update"))
+    util.AddNetworkString("youtube_proj_update")
 end
 
 local BaseClass = baseclass.Get("base_anim")
