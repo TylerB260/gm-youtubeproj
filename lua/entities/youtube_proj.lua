@@ -101,8 +101,8 @@ function ENT:Load()
 end
 
 function ENT:Unload()
-    if self.html then self.html:Remove()
-    if self.proj then self.proj:Remove()
+    if self.html then self.html:Remove() end
+    if self.proj then self.proj:Remove() end
 end
 
 function ENT:Seek()
