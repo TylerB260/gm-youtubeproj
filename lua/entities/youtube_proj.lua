@@ -116,7 +116,7 @@ end
 net.Receive("youtube_proj_update", function(len, ply)
     local ent = net.ReadEntity()
     if not IsValid(ent) or ent:GetClass() ~= "youtube_proj" then return end
-    if ent.html then
-        ent.html:OpenURL(self:GetURL())
+    if IsValid(ent.html) then
+        ent.html:OpenURL(ent:GetURL())
     end
 end)
