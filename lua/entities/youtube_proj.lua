@@ -109,7 +109,7 @@ end
 
 function ENT:Seek()
     if not self.html then return end
-    self.html:Call([[document.getElementsByTagName("video")[0].fastSeek(]] .. CurTime() - self:GetStartTime() .. [[)]])
+    self.html:Call([[document.getElementsByTagName("video")[0].currentTime = ]] .. CurTime() - self:GetStartTime() .. [[]])
 end
 
 net.Receive("youtube_proj_update", function(len, ply)
