@@ -14,7 +14,8 @@ ENT.Category = "Fun + Games"
 ENT.Editable = true
 ENT.Spawnable = true
 ENT.AdminOnly = false
-ENT.RenderGroup = RENDERGROUP_TRANSLUCENT
+ENT.RenderGroup = RENDERGROUP_OPAUQE
+
 
 function ENT:SetupDataTables()
     self:NetworkVar("String", 0, "URL", {KeyName = "url", Edit = {type = "String", min = 1, max = 90, order = 1}})
@@ -66,6 +67,7 @@ end
 if not CLIENT then return end
 
 function ENT:Draw()
+    self:DrawModel()
     if self.html then
         local hmat = self.html:GetHTMLMaterial()
         if hmat and self.proj then
