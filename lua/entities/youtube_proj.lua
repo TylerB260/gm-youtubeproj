@@ -70,7 +70,7 @@ function ENT:Draw()
     self:DrawModel()
     if IsValid(self.html) then
         local hmat = self.html:GetHTMLMaterial()
-        if IsValid(hmat) and IsValid(self.proj) then
+        if hmat and IsValid(self.proj) then
             self.proj:SetPos(self:LocalToWorld(Vector(8, 0, 0)))
             self.proj:SetAngles(self:GetAngles())
             self.proj:SetTexture(hmat:GetTexture("$basetexture"))
