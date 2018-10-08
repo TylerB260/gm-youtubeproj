@@ -119,6 +119,30 @@ function ENT:Seek()
     self.html:Call([[document.getElementsByTagName("video")[0].currentTime = ]] .. seek .. [[]])
 end
 
+function ENT:OnRemove()
+   self:Unload() 
+end
+
+function ENT:Think()
+    local thresh = 512
+    local dist = LocalPlayer():GetPos():Distance(self:GetPos())
+    if dist > 512 then
+        if not self.outofrange then
+            self.outofrange = true 
+            self:Unload()
+        end
+    else
+        if self.outofrange then
+            self.outofrange = false
+            self:Load()
+        end
+        if IsValid(self.html) and CurTime() - self.lastvolupdate > 0.1 then
+            self.html:Call([[document.getElementsByTagName("video")[0].volume = ]] .. math.max(0, 1 - LocalPlayer():GetPos():Distance(cam:GetPos()) / thresh))
+            self.lastvolupdate = CurTime()
+        end
+    end
+end
+
 net.Receive("youtube_proj_update", function(len, ply)
     local ent = net.ReadEntity()
     if not IsValid(ent) or ent:GetClass() ~= "youtube_proj" then return end
