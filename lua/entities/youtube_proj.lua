@@ -78,7 +78,7 @@ function ENT:Draw()
             self.proj:SetBrightness(self:GetBrightness())
             local col = self:GetColor()
             self.proj:SetColor(Color(col.r * 255, col.g * 255, col.b * 255))
-            self.prok:Update()
+            self.proj:Update()
         end
     end
 end
