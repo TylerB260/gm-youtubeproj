@@ -21,7 +21,7 @@ function ENT:SetupDataTables()
     self:NetworkVar("String", 0, "URL", {KeyName = "url", Edit = {type = "String", min = 1, max = 90, order = 1}})
     self:NetworkVar("String", 1, "URI")
 	self:NetworkVar("Float", 0, "FOV", {KeyName = "fov", Edit = {type = "Float", min = 1, max = 90, order = 2}})
-    self:NetworkVar("Float", 1, "Brightness", {KeyName = "brightness", Edit = {type = "Float", order = 3}})
+    self:NetworkVar("Float", 1, "Brightness", {KeyName = "brightness", Edit = {type = "Float", min = 1, max = 10, order = 3}})
 	self:NetworkVar("Vector", 0, "Color", {KeyName = "color", Edit = {type = "VectorColor", order = 4}})
     self:NetworkVar("Float", 3, "StartTime")
 
@@ -46,6 +46,9 @@ function ENT:Initialize()
         self:SetModel("models/dav0r/camera.mdl")
         self:PhysicsInit(SOLID_VPHYSICS)
         self:PhysWake()
+        
+        self:SetFOV(45)
+        self:SetBrightness(5)
     end
 end
 
@@ -57,11 +60,12 @@ function ENT:OnSettingsChanged(varname, oldvalue, newvalue)
         local uend = string.find(newvalue, "[?&]", ustart)
         self:SetURI(string.sub(newvalue, ustart + 1, uend))
         self:SetStartTime(CurTime())
+        if SERVER then
+            net.Start("youtube_proj_update")
+                net.WriteEntity(self)
+            net.Send(player.GetAll())
+        end
     end
-    if CLIENT then return end
-    net.Start("youtube_proj_update")
-        net.WriteEntity(self)
-    net.Send(player.GetAll())
 end
 
 if not CLIENT then return end
@@ -118,7 +122,6 @@ end
 net.Receive("youtube_proj_update", function(len, ply)
     local ent = net.ReadEntity()
     if not IsValid(ent) or ent:GetClass() ~= "youtube_proj" then return end
-    if IsValid(ent.html) then
-        ent.html:OpenURL(ent:GetURL())
-    end
+    ent:Unload()
+    ent:Load()
 end)
