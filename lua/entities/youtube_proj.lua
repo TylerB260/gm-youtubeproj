@@ -68,9 +68,9 @@ if not CLIENT then return end
 
 function ENT:Draw()
     self:DrawModel()
-    if self.html then
+    if IsValid(self.html) then
         local hmat = self.html:GetHTMLMaterial()
-        if hmat and self.proj then
+        if IsValid(hmat) and IsValid(self.proj) then
             self.proj:SetPos(self:LocalToWorld(Vector(8, 0, 0)))
             self.proj:SetAngles(self:GetAngles())
             self.proj:SetTexture(hmat:GetTexture("$basetexture"))
@@ -104,8 +104,8 @@ function ENT:Load()
 end
 
 function ENT:Unload()
-    if self.html then self.html:Remove() end
-    if self.proj then self.proj:Remove() end
+    if IsValid(self.html) then self.html:Remove() end
+    if IsValid(self.proj) then self.proj:Remove() end
 end
 
 function ENT:Seek()
