@@ -66,7 +66,6 @@ end
 if not CLIENT then return end
 
 function ENT:Draw()
-    BaseClass:Draw()
     if self.html then
         local hmat = self.html:GetHTMLMaterial()
         if hmat and self.proj then
