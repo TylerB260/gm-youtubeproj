@@ -57,6 +57,7 @@ function ENT:OnSettingsChanged(varname, oldvalue, newvalue)
     if varname == "URL" then
         local _, ustart = string.find(newvalue, "[?&]v=")
         if not ustart then _, ustart = string.find(newvalue, "/embed/") end
+        ustart = ustart or 0
         local uend = string.find(newvalue, "[?&]", ustart)
         self:SetURI(string.sub(newvalue, ustart + 1, uend))
         self:SetStartTime(CurTime())
