@@ -86,6 +86,11 @@ end
 function ENT:Load()
     if self.html then self.html:Remove() end
     self.html = vgui.Create("DHTML")
+    
+    function self.html.OnDocumentReady(panel, url)
+        self:Seek()
+    end
+    
     self.html:SetSize(1024, 768)
     self.html:OpenURL("https://www.youtube.com/embed/" .. self:GetURI() .. "?rel=0&controls=0&showinfo=0&autoplay=1")
     self.html:SetAlpha(0)
@@ -96,10 +101,6 @@ function ENT:Load()
     self.proj:SetFarZ(1024)
     self.proj:SetEnableShadows(true)
     self.proj:SetTexture("effects/flashlight001")
-    
-    function self.html.OnDocumentReady(panel, url)
-        self:Seek()
-    end
 end
 
 function ENT:Unload()
@@ -108,7 +109,8 @@ function ENT:Unload()
 end
 
 function ENT:Seek()
-    ent.html:Call([[document.getElementsByTagName("video")[0].fastSeek(]] .. CurTime() - self:GetStartTime() .. [[)]])
+    if not self.html then return end
+    self.html:Call([[document.getElementsByTagName("video")[0].fastSeek(]] .. CurTime() - self:GetStartTime() .. [[)]])
 end
 
 net.Receive("youtube_proj_update", function(len, ply)
