@@ -136,6 +136,7 @@ function ENT:Think()
             self.outofrange = false
             self:Load()
         end
+        self.lastvolupdate = self.lastvolupdate or CurTime()
         if IsValid(self.html) and CurTime() - self.lastvolupdate > 0.1 then
             self.html:Call([[document.getElementsByTagName("video")[0].volume = ]] .. math.max(0, 1 - LocalPlayer():GetPos():Distance(cam:GetPos()) / thresh))
             self.lastvolupdate = CurTime()
