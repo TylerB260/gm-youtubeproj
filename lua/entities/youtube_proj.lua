@@ -56,6 +56,7 @@ function ENT:OnSettingsChanged(varname, oldvalue, newvalue)
         if not ustart then _, ustart = string.find(newvalue, "/embed/") end
         local uend = string.find(newvalue, "[?&]", ustart)
         self:SetURI(string.sub(newvalue, ustart + 1, uend))
+        self:SetStartTime(CurTime())
     end
     if CLIENT then return end
     net.Start("youtube_proj_update")
