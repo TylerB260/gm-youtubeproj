@@ -76,7 +76,8 @@ function ENT:Draw()
             self.proj:SetTexture(hmat:GetTexture("$basetexture"))
             self.proj:SetFOV(self:GetFOV())
             self.proj:SetBrightness(self:GetBrightness())
-            self.proj:SetColor(self:GetColor() * 255)
+            local col = self:GetColor()
+            self.proj:SetColor(Color(col.r * 255, col.g * 255, col.b * 255))
             self.prok:Update()
         end
     end
