@@ -95,9 +95,12 @@ function ENT:Load()
     function self.html.OnDocumentReady(panel, url)
         self:Seek()
     end
+	
+    local seek = math.floor(CurTime() - self:GetStartTime())
+    if self:GetStartTime() == 0 then seek = 0 end
     
     self.html:SetSize(1024, 768)
-    self.html:OpenURL("https://www.youtube.com/embed/" .. self:GetURI() .. "?rel=0&controls=0&showinfo=0&autoplay=1")
+    self.html:OpenURL("https://www.youtube.com/embed/" .. self:GetURI() .. "?rel=0&controls=0&showinfo=0&autoplay=1&start=" .. seek)
     self.html:SetAlpha(0)
     self.html:SetMouseInputEnabled(false)
     
